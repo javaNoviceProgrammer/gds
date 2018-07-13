@@ -14,7 +14,6 @@ public class PythonCompiler {
 	}
 
 	public PythonCompiler(Cell cell){
-//		PythonCompiler.fileName = cell.cellName ;
 		PythonCompiler.fileName = cell.cellPath ;
 	}
 
