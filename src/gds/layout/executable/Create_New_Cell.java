@@ -30,7 +30,7 @@ public class Create_New_Cell implements Experiment {
 	public static void main(String[] args) {
 		String pacakgeString = "gds";
 		String classString = "gds.layout.executable.Create_New_Cell";
-		ExperimentConfigurationCockpit.main(new String[] { "-p", pacakgeString, "-c", classString });
+		ExperimentConfigurationCockpit.execute(new String[] { "-p", pacakgeString, "-c", classString }, true);
 	}
 	
 }
