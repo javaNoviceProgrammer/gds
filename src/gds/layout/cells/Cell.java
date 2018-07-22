@@ -24,54 +24,6 @@ public class Cell {
 	boolean createPy ;
 	boolean runLayoutViewer ;
 
-//	public Cell(
-//			@ParamName(name="Cell Name") String cellName,
-//			@ParamName(name="Elements") AbstractElement[] elements,
-////			@ParamName(name="Global translation of the Cell") Position P,
-//			@ParamName(name="Compile this cell?", default_= "true") boolean createPy
-//			){
-//		this.cellName = cellName ;
-//		this.elements = elements ;
-////		this.P = P ;
-//		this.createPy = createPy ;
-////		translateCell();
-//		if(createPy){savePythonFile() ;}
-//		// now clear the data base
-//		DataBase.clear();
-//	}
-
-//	public Cell(
-//			@ParamName(name="Cell Name") String cellName,
-//			@ParamName(name="Elements") AbstractElement[] elements,
-////			@ParamName(name="Global translation of the Cell") Position P,
-//			@ParamName(name="Compile this cell?", default_= "true") boolean createPy,
-//			@ParamName(name="Save Python code to Desktop?", default_= "false") boolean savePy
-//			){
-//		this.cellName = cellName ;
-//		this.elements = elements ;
-////		this.P = P ;
-//		this.createPy = createPy ;
-////		translateCell();
-//		if(createPy){savePythonFile() ;}
-//		if(savePy){savePyFile();} ;
-//		// now clear the data base
-//		DataBase.clear();
-//	}
-
-//	public Cell(
-//			@ParamName(name="Cell Name") String cellName,
-//			@ParamName(name="Elements") AbstractElement[] elements
-//			){
-//		this.cellName = cellName ;
-//		this.elements = elements ;
-//		this.runLayoutViewer = true ;
-//		// create python file and compile it
-//		cellPath = CustomJFileChooser.path + File.separator + cellName ;
-//		savePyFile() ;
-//		// now clear the data base
-//		DataBase.clear();
-//	}
-
 	public Cell(
 			@ParamName(name="Cell Name") String cellName,
 			@ParamName(name="Run Layout Viewer?") boolean runLayoutViewer,
@@ -83,6 +35,24 @@ public class Cell {
 		// create python file and compile it
 		cellPath = CustomJFileChooser.path + File.separator + cellName ;
 		savePyFile() ;
+		// now clear the data base
+		DataBase.clear();
+	}
+
+	public Cell(
+			@ParamName(name="Cell Name") String cellName,
+			@ParamName(name="Run Layout Viewer?") boolean runLayoutViewer,
+			@ParamName(name="Global translation of the Cell") Position P,
+			@ParamName(name="Elements") AbstractElement[] elements
+			){
+		this.cellName = cellName ;
+		this.elements = elements ;
+		this.P = P ;
+		this.runLayoutViewer = runLayoutViewer ;
+		// create python file and compile it
+		cellPath = CustomJFileChooser.path + File.separator + cellName ;
+		savePyFile() ;
+		translateCell();
 		// now clear the data base
 		DataBase.clear();
 	}
@@ -135,7 +105,7 @@ public class Cell {
 		}
 		Cell cell_translated = new Cell(cellName, elements_translated, P, false) ;
 		return cell_translated ;
-	}
+	}*/
 
 
 	private void translateCell() {
@@ -143,7 +113,7 @@ public class Cell {
 		for(int i=0; i<n; i++){
 			elements[i] = elements[i].translateXY(P.getX(), P.getY()) ;
 		}
-	}*/
+	}
 
 	// creating a python code specifically for the cell with complete header and footer
 	public void savePythonFile(){

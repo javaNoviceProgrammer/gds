@@ -8,20 +8,15 @@ import ch.epfl.general_libraries.clazzes.ParamName;
 import flanagan.io.FileOutput;
 
 public class Layout {
-	
-	// Step 1: define the name of the file
-	// Step 2: import the necessary libraries through the header class
-	// Step 3: add the body (including the photonic elements)
-	// Step 4: add the footer for saving the .py file and closing the file
-	
+
 	String topCellName ;
 	Header header ;
 	Footer footer ;
 	Cell[] cells ;
 	int numCells ;
 
-	public Layout(
-			@ParamName(name="Top Cell Name") String topCellName ,
+/*	public Layout(
+			@ParamName(name="Layout Name") String topCellName ,
 			@ParamName(name="Header") Header header,
 			@ParamName(name="Footer") Footer footer,
 			@ParamName(name="Cells") Cell[] cells
@@ -31,15 +26,26 @@ public class Layout {
 		this.footer = footer ;
 		this.cells = cells ;
 		this.numCells = cells.length ;
+	}*/
+
+	public Layout(
+			@ParamName(name="Layout Name") String topCellName ,
+			@ParamName(name="Cells") Cell[] cells
+			){
+		this.topCellName = topCellName  ;
+		this.header = new Header() ;
+		this.footer = new Footer() ;
+		this.cells = cells ;
+		this.numCells = cells.length ;
 	}
-	
-	private void createTopCell(){
+
+	private void createLayout(){
 		String st0 = "" ;
-		String st1 = "### Now creating the TOP CeLL" ;
+		String st1 = "### Now creating the LAYOUT" ;
 		String st2 = topCellName + " = gdspy.Cell(" + "'" + topCellName + "'" + ")" ;
 		String[] args0 = {st0, st1, st2} ;
 		int n = cells.length ;
-		String[] args1 = new String[n] ;	
+		String[] args1 = new String[n] ;
 		for(int i=0; i<n; i++){
 			args1[i] = topCellName + ".add(" + cells[i].cellName + ")"  ;
 		}
@@ -48,19 +54,15 @@ public class Layout {
 		fout.println(args);
 		fout.close();
 	}
-	
+
 	public void execute(){
-		// adding the header first
 		header.writeToFile(topCellName);
-		// then adding the main body of each Cell
 		for(int i=0; i<numCells; i++){
 			cells[i].appendToFile(topCellName);
 		}
-		// next creating the top_cell and adding all the cells
-		createTopCell() ;
-		// finally adding the footer
+		createLayout() ;
 		footer.appendToFile(topCellName);
 	}
 
-	
+
 }
