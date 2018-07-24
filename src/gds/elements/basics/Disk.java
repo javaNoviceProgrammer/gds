@@ -15,7 +15,7 @@ public class Disk extends AbstractElement {
 	
 	AbstractLayerMap[] layerMap ;
 	Position center ;
-	double radius_um ;
+	double radius_um, angle_degree, angle_rad, startAngle_degree, startAngle_rad ;
 	AbstractElement ringAsDisk ;
 	Center centerPosition ;
 	
@@ -29,6 +29,31 @@ public class Disk extends AbstractElement {
 		this.layerMap = layerMap ;
 		this.centerPosition = centerPosition ;
 		this.radius_um = radius_um.getValue() ;
+		this.angle_degree = 360 ;
+		this.angle_rad = angle_degree*Math.PI/180D ;
+		this.startAngle_degree = 0 ;
+		this.startAngle_rad = this.startAngle_degree*Math.PI/180D ;
+		setPorts() ;
+		createDisk() ;
+		saveProperties() ;
+	}
+	
+	public Disk(
+			@ParamName(name="Object Name") String objectName,
+			@ParamName(name="Waveguide Layer") AbstractLayerMap[] layerMap,
+			@ParamName(name="Choose Center") Center centerPosition,
+			@ParamName(name="Radius (um)") Entry radius_um, // from center to the edge of the disk
+			@ParamName(name="Angle (degree)") Entry angle_degree,
+			@ParamName(name="Start angle (degree)") Entry startAngle_degree
+			){
+		this.objectName = objectName ;
+		this.layerMap = layerMap ;
+		this.centerPosition = centerPosition ;
+		this.radius_um = radius_um.getValue() ;
+		this.angle_degree = angle_degree.getValue() ;
+		this.angle_rad = this.angle_degree * Math.PI/180D ;
+		this.startAngle_degree = startAngle_degree.getValue() ;
+		this.startAngle_rad = this.startAngle_degree*Math.PI/180D ;
 		setPorts() ;
 		createDisk() ;
 		saveProperties() ;
@@ -41,7 +66,8 @@ public class Disk extends AbstractElement {
 	
 	public void createDisk(){
 		// creating a new ring with zero inner radius
-		ringAsDisk = new Ring(objectName, layerMap, new Ring.Center(center), new Entry(radius_um), new Entry(radius_um/2)) ;
+	//	ringAsDisk = new Ring(objectName, layerMap, new Ring.Center(center), new Entry(radius_um), new Entry(radius_um/2)) ;
+		ringAsDisk = new Ring(objectName, layerMap, new Ring.Center(center), new Entry(startAngle_degree), new Entry(radius_um), new Entry(radius_um/2), new Entry(angle_degree)) ;
 	}
 	
 	@Override

@@ -5,44 +5,41 @@ import flanagan.io.FileOutput;
 import gds.elements.AbstractElement;
 import gds.elements.positioning.Port;
 import gds.elements.positioning.Position;
-import gds.elements.shapes.Path;
-import gds.elements.shapes.path_elements.AbstractPathElement;
-import gds.elements.shapes.path_elements.Segment;
 import gds.pdk.AbstractLayerMap;
 import gds.util.MoreMath;
 
-public class GratingCoupler extends AbstractElement {
+public class GratingCouplerCircular extends AbstractElement {
 
 	AbstractLayerMap[] layerMap ;
-	double width_in_um, sep_um, width_gc_um, length_gc_um, length_taper_um, period_gc_um  ;
+	double width_in_um, sep_um, length_gc_um, radius_taper_um, period_gc_um, angle_gc_degree, angle_gc_rad  ;
 	int num_gratings ;
-	double lx_um, ly_um ;
 	public Port port1 ;
 
-	Path p1 ;
-	StraightWg[] gratings ;
+	Disk taper ;
+	StraightWg wg ;
+	CurvedWg[] gratings ;
 
-	public GratingCoupler(
+	public GratingCouplerCircular(
 			@ParamName(name="Object Name") String objectName,
 			@ParamName(name="Layer Map") AbstractLayerMap[] layerMap,
 			@ParamName(name="Choose Port") Port objectPort,
-			@ParamName(name="Width of Each Grating (um)", default_="20") Entry width_gc_um,
-			@ParamName(name="Length of Each Grating (um)", default_="1") Entry length_gc_um,
-			@ParamName(name="Separation of Grating Elements (um)", default_="0.5") Entry sep_um,
-			@ParamName(name="Number of Grating Periods", default_="10") Entry num_gratings,
-			@ParamName(name="Length of the tapered input (um)", default_="10") Entry length_taper_um
+			@ParamName(name="Angle of Grating (um)") Entry angle_gc_degree,
+			@ParamName(name="Length of Each Grating (um)") Entry length_gc_um,
+			@ParamName(name="Separation of Grating Elements (um)") Entry sep_um,
+			@ParamName(name="Number of Grating Periods") Entry num_gratings,
+			@ParamName(name="Radius of the tapered input (um)") Entry radius_taper_um
 			){
 		this.objectName = objectName ;
 		this.layerMap = layerMap ;
 		this.port1 = objectPort ;
-		this.width_gc_um = width_gc_um.getValue() ;
+		this.width_in_um = port1.getWidthMicron() ;
+		this.angle_gc_degree = angle_gc_degree.getValue() ;
+		this.angle_gc_rad = this.angle_gc_degree * Math.PI/180 ;
 		this.length_gc_um = length_gc_um.getValue() ;
 		this.sep_um = sep_um.getValue() ;
 		this.num_gratings = (int) num_gratings.getValue() ;
-		this.length_taper_um = length_taper_um.getValue() ;
+		this.radius_taper_um = radius_taper_um.getValue() ;
 		period_gc_um = this.sep_um + this.length_gc_um ;
-		lx_um = this.num_gratings * this.length_gc_um + this.length_taper_um ;
-		ly_um = this.width_gc_um ;
 
 		setPorts() ;
 		createObject() ;
@@ -66,19 +63,23 @@ public class GratingCoupler extends AbstractElement {
 	}
 
 	private void createObject(){
-		// creating input taper
-		Segment taper = new Segment(length_taper_um, width_gc_um) ;
-		AbstractPathElement[] elements = {taper} ;
-		p1 = new Path(objectName+"_"+"taper", layerMap, port1, elements) ;
+		// creating input wg
+		double x_um = width_in_um/2 /Math.tan(angle_gc_rad/2) ;
+		wg = new StraightWg(objectName+"_"+"wg1", layerMap, "port1", port1, new Entry(x_um)) ;
+
+		Position normVec = port1.getNormalVec().getUnitVector().rotate(port1.getPosition(), -angle_gc_degree/2).scale(-1) ;
+		Position edgeVec = port1.getEdgeVec().getUnitVector().rotate(port1.getPosition(), -angle_gc_degree/2) ;
+		Position P = port1.getPosition().translateXY(normVec.resize(radius_taper_um+sep_um+length_gc_um/2)) ;
+		// creating circular taper
+		taper = new Disk(objectName+"_"+"taper", layerMap, new Disk.Center(port1.getPosition()), new Entry(radius_taper_um), new Entry(angle_gc_degree), new Entry(normVec.getPhi_degree())) ;
 		// creating all the grating periods
-		Position normVec = port1.getNormalVec().getUnitVector().scale(-1) ;
-		Position edgeVec = port1.getEdgeVec().getUnitVector() ;
-		Position P = port1.getPosition().translateXY(normVec.resize(length_taper_um+sep_um+length_gc_um/2)).translateXY(edgeVec.resize(width_gc_um/2)) ;
-		gratings = new StraightWg[num_gratings] ;
+		gratings = new CurvedWg[num_gratings] ;
+		double radius_gc_um = radius_taper_um + sep_um + length_gc_um/2 ;
 		for(int i=0; i<num_gratings; i++) {
 			Port wgPort = new Port(P, length_gc_um, edgeVec.getPhi_degree()) ;
-			gratings[i] = new StraightWg(objectName+"_"+"gc"+"_"+(i+1), layerMap, "port1", wgPort, new Entry(width_gc_um)) ;
+			gratings[i] = new CurvedWg(objectName+"_"+"gc"+"_"+(i+1), layerMap, "port1", wgPort, false, new Entry(radius_gc_um), new Entry(angle_gc_degree)) ;
 			P = P.translateXY(normVec.resize(period_gc_um)) ;
+			radius_gc_um += period_gc_um ;
 		}
 	}
 
@@ -88,7 +89,8 @@ public class GratingCoupler extends AbstractElement {
 		String st1 = "##             Adding a Grating             ##" ;
 		String st2 = "## ---------------------------------------- ##" ;
 		String[] args = {st0, st1, st2} ;
-		args = MoreMath.Arrays.concat(args, p1.getPythonCode_no_header(fileName, topCellName)) ;
+		args = MoreMath.Arrays.concat(args, wg.getPythonCode_no_header(fileName, topCellName)) ;
+		args = MoreMath.Arrays.concat(args, taper.getPythonCode_no_header(fileName, topCellName)) ;
 		for(int i=0; i<num_gratings; i++) {
 			args = MoreMath.Arrays.concat(args, gratings[i].getPythonCode_no_header(fileName, topCellName)) ;
 		}
@@ -97,7 +99,8 @@ public class GratingCoupler extends AbstractElement {
 
 	@Override
 	public String[] getPythonCode_no_header(String fileName, String topCellName) {
-		String[] args = p1.getPythonCode_no_header(fileName, topCellName) ;
+		String[] args = wg.getPythonCode_no_header(fileName, topCellName) ;
+		args = MoreMath.Arrays.concat(args, taper.getPythonCode_no_header(fileName, topCellName)) ;
 		for(int i=0; i<num_gratings; i++) {
 			args = MoreMath.Arrays.concat(args, gratings[i].getPythonCode_no_header(fileName, topCellName)) ;
 		}
@@ -121,7 +124,7 @@ public class GratingCoupler extends AbstractElement {
 	@Override
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = port1.translateXY(dX, dY) ;
-		AbstractElement grating_translated = new GratingCoupler(objectName, layerMap, port_translated, new Entry(width_gc_um), new Entry(length_gc_um), new Entry(sep_um), new Entry(num_gratings), new Entry(length_taper_um)) ;
+		AbstractElement grating_translated = new GratingCouplerCircular(objectName, layerMap, port_translated, new Entry(angle_gc_degree), new Entry(length_gc_um), new Entry(sep_um), new Entry(num_gratings), new Entry(radius_taper_um)) ;
 		return grating_translated;
 	}
 

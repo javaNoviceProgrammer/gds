@@ -13,8 +13,8 @@ public class Ring extends AbstractElement {
 	 * class gdspy.Round(center, radius, inner_radius=0, initial_angle=0, fnal_angle=0, number_of_points=0.01, max_points=199, layer=0, datatype=0)
 	 */
 
-	double width_um ; // for AIM width is set to 400nm (0.4um)
-	double radius_um ; // length of the waveguide in micron
+	double width_um ;
+	double radius_um ;
 	double Rin, Rout ;
 	double angleDegree, angleRad ; // this is the orientation angle with respect to the start edge
 	double startAngleDegree, startAngleRad ; // this is between 0 and pi. The sign of this angle determines where the center of the bend lies.
@@ -40,6 +40,30 @@ public class Ring extends AbstractElement {
 		Rout = radius_um.getValue() + width_um.getValue()/2 ;
 		this.angleDegree = 360 ; // could be positive or negative
 		angleRad = angleDegree * Math.PI/180 ;
+		this.centerPosition = centerPosition ;
+		setPorts() ;
+		saveProperties() ;
+	}
+	
+	public Ring(
+			@ParamName(name="Object Name") String objectName,
+			@ParamName(name="Waveguide Layer") AbstractLayerMap[] layerMap,
+			@ParamName(name="Choose Center") Center centerPosition,
+			@ParamName(name="Start angle (degree)") Entry startAgnle_degree,
+			@ParamName(name="Width of the ring (um)") Entry width_um,
+			@ParamName(name="Radius (um)") Entry radius_um, // from center to the middle of the ring
+			@ParamName(name="Span Angle (degree)") Entry span_angle_degree // from center to the middle of the ring
+			){
+		this.objectName = objectName ;
+		this.layerMap = layerMap ;
+		this.startAngleDegree = 0 ;
+		startAngleRad = startAgnle_degree.getValue() * Math.PI/180 ;
+		this.width_um = width_um.getValue() ;
+		this.radius_um = radius_um.getValue() ; // from center to the middle of the ring
+		Rin = radius_um.getValue() - width_um.getValue()/2 ;
+		Rout = radius_um.getValue() + width_um.getValue()/2 ;
+		this.angleDegree = span_angle_degree.getValue() ; // could be positive or negative
+		angleRad = angleDegree * Math.PI/180D ;
 		this.centerPosition = centerPosition ;
 		setPorts() ;
 		saveProperties() ;
