@@ -155,6 +155,10 @@ public class Position {
 		String st = "(" + x + "," + y + ")" ;
 		return st ;
 	}
+	
+	public String toString() {
+		return getString() ;
+	}
 
 	//******* main method for test purposes ***********
 	public static void main(String[] args) {

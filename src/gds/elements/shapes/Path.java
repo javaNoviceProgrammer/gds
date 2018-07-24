@@ -53,16 +53,6 @@ public class Path extends AbstractElement {
 		AbstractPathElement.elementPorts.clear();
 	}
 	
-/*	public static void main(String[] args){
-		AbstractPathElement element1 = new Arc(5, true, 90) ;
-		AbstractPathElement element2 = new Arc(5, true, 90) ;
-		AbstractPathElement element3 = new Arc(5, true, 90) ;
-		Port port = new Port(new Position(1,2), 0.4, 180) ;
-		Path p1 = new Path("as", new AbstractLayerMap[] {new SEAM()}, port, new AbstractPathElement[] {element1, element2, element3}) ;
-		System.out.println(p1.port1.getString());
-		System.out.println(p1.port2.getString());
-	}*/
-	
 	@Override
 	public void setPorts(){
 		P1 = port1.getPosition() ;
