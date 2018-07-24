@@ -125,6 +125,12 @@ public class PolygonSet extends AbstractElement {
 		return null;
 	}
 
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 	

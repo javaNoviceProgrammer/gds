@@ -97,6 +97,7 @@ public class DirectionalCoupler extends AbstractElement {
 		objectProperties.put(objectName+".offset.horizontal_um", horizontalOffset_um) ;
 		objectProperties.put(objectName+".offset.vertical_um", verticalOffset_um) ;
 		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -144,6 +145,13 @@ public class DirectionalCoupler extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = objectPort.translateXY(dX, dY) ;
 		AbstractElement DC_translated = new DirectionalCoupler(objectName, layerMap, portNumber, port_translated, new Entry(length_um), new Entry(gap_nm), new Entry(horizontalOffset_um), new Entry(verticalOffset_um)) ;
+		return DC_translated ;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = objectPort.translateXY(dX, dY) ;
+		AbstractElement DC_translated = new DirectionalCoupler(newName, layerMap, portNumber, port_translated, new Entry(length_um), new Entry(gap_nm), new Entry(horizontalOffset_um), new Entry(verticalOffset_um)) ;
 		return DC_translated ;
 	}
 

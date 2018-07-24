@@ -64,6 +64,8 @@ public class VIA extends AbstractElement {
 	public void saveProperties(){
 		objectProperties.put(objectName+".width_um", width_um) ;
 		objectProperties.put(objectName+".via.width_um", width_VIA_um) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -109,6 +111,13 @@ public class VIA extends AbstractElement {
 
 	@Override
 	public AbstractElement translateXY(double dX, double dY) {
+		Port P1_translated = port.translateXY(dX, dY) ;
+		AbstractElement VIA_new = new VIA(objectName, layerMap1, layerMap2, layerMapVIA, P1_translated, new Entry(width_VIA_um)) ;
+		return VIA_new ;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
 		Port P1_translated = port.translateXY(dX, dY) ;
 		AbstractElement VIA_new = new VIA(objectName, layerMap1, layerMap2, layerMapVIA, P1_translated, new Entry(width_VIA_um)) ;
 		return VIA_new ;

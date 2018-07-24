@@ -73,6 +73,8 @@ public class MZI1x1 extends AbstractElement {
 		objectProperties.put(objectName+".arm.width_um", width_um) ;
 		objectProperties.put(objectName+".offset.horizontal_um", hOffset_um) ;
 		objectProperties.put(objectName+".offset.vertical_um", vOffset_um) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -115,6 +117,13 @@ public class MZI1x1 extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = port1.translateXY(dX, dY) ;
 		AbstractElement mzi_translated = new MZI1x1(objectName, layerMap, portNumber, port_translated, new Entry(hOffset_um), new Entry(vOffset_um), new Entry(length_arm_um)) ;
+		return mzi_translated ;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = port1.translateXY(dX, dY) ;
+		AbstractElement mzi_translated = new MZI1x1(newName, layerMap, portNumber, port_translated, new Entry(hOffset_um), new Entry(vOffset_um), new Entry(length_arm_um)) ;
 		return mzi_translated ;
 	}
 	

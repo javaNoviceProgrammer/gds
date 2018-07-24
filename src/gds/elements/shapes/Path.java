@@ -140,6 +140,13 @@ public class Path extends AbstractElement {
 		AbstractElement path_translated = new Path(objectName, layerMap, port1_translated, pathElements) ;
 		return path_translated ;
 	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port1_translated = port1.translateXY(dX, dY) ;
+		AbstractElement path_translated = new Path(newName, layerMap, port1_translated, pathElements) ;
+		return path_translated ;
+	}
 	
 	
 	

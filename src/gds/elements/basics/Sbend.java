@@ -72,6 +72,7 @@ public class Sbend extends AbstractElement {
 		objectProperties.put(objectName+".offset.horizontal_um", horizontalOffset_um) ;
 		objectProperties.put(objectName+".offset.vertical_um", verticalOffset_um) ;
 
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -109,6 +110,13 @@ public class Sbend extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port1_translated = port1.translateXY(dX, dY) ;
 		AbstractElement Sbend_translated = new Sbend(objectName, layerMap, port1_translated, new Entry(horizontalOffset_um), new Entry(verticalOffset_um)) ;
+		return Sbend_translated;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port1_translated = port1.translateXY(dX, dY) ;
+		AbstractElement Sbend_translated = new Sbend(newName, layerMap, port1_translated, new Entry(horizontalOffset_um), new Entry(verticalOffset_um)) ;
 		return Sbend_translated;
 	}
 	

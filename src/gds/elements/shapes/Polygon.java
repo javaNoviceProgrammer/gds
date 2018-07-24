@@ -134,4 +134,15 @@ public class Polygon extends AbstractElement {
 		return polygon_translated;
 	}
 
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		int n = pointArray.length ;
+		Position[] pointArray_translated = new Position[n] ;
+		for(int i=0; i<n; i++){
+			pointArray_translated[i] = pointArray[i].translateXY(dX, dY) ;
+		}
+		Polygon polygon_translated = new Polygon(newName, layerMap, pointArray_translated) ;
+		return polygon_translated;
+	}
+
 }

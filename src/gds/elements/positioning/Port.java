@@ -143,6 +143,10 @@ public class Port extends DataBase {
 		return st0 ;
 	}
 	
+	public String toString() {
+		return getString() ;
+	}
+	
 	
 	//*****************For test**************
 	

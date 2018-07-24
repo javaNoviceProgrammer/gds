@@ -72,7 +72,8 @@ public class Bend180degreeBezier extends AbstractElement {
 		objectProperties.put(objectName+".width_um", width_um) ;
 		objectProperties.put(objectName+".R_um", R_um) ;
 		objectProperties.put(objectName+".d_um", d_um) ;
-
+		
+		allElements.put(objectName, this) ;
 	}
 
 	@Override
@@ -110,6 +111,13 @@ public class Bend180degreeBezier extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port1_translated = port1.translateXY(dX, dY) ;
 		AbstractElement Sbend_translated = new Bend180degreeBezier(objectName, layerMap, port1_translated, new Entry(R_um), new Entry(d_um)) ;
+		return Sbend_translated;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port1_translated = port1.translateXY(dX, dY) ;
+		AbstractElement Sbend_translated = new Bend180degreeBezier(newName, layerMap, port1_translated, new Entry(R_um), new Entry(d_um)) ;
 		return Sbend_translated;
 	}
 

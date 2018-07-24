@@ -134,7 +134,7 @@ public class MMI2x2 extends AbstractElement {
 
 	@Override
 	public void saveProperties(){
-
+		allElements.put(objectName, this) ;
 	}
 
 	@Override
@@ -179,6 +179,13 @@ public class MMI2x2 extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = objectPort.translateXY(dX, dY) ;
 		AbstractElement mmi_translated = new MMI2x2(objectName, layerMap, portNumber, port_translated, new Entry(width_mmi_um), new Entry(length_mmi_um), new Entry(sep_input_um), new Entry(sep_output_um), new Entry(width_wg_taper_um)) ;
+		return mmi_translated;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = objectPort.translateXY(dX, dY) ;
+		AbstractElement mmi_translated = new MMI2x2(newName, layerMap, portNumber, port_translated, new Entry(width_mmi_um), new Entry(length_mmi_um), new Entry(sep_input_um), new Entry(sep_output_um), new Entry(width_wg_taper_um)) ;
 		return mmi_translated;
 	}
 

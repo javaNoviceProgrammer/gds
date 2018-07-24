@@ -113,6 +113,8 @@ public class AddDropRingSecondOrder extends AbstractElement {
 		objectProperties.put(objectName+".outputgap_um", outputGap_um) ;
 		objectProperties.put(objectName+".ringringgap_nm", ringRingGap_um*1000) ;
 		objectProperties.put(objectName+".ringringgap_um", ringRingGap_um) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -166,6 +168,14 @@ public class AddDropRingSecondOrder extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = objectPort.translateXY(dX, dY) ;
 		AbstractElement AddDropRing_translated = new AddDropRingSecondOrder(objectName, layerMap, portNumber, port_translated, new Entry(ringWidth1_um), new Entry(radius1_um), 
+				new Entry(ringWidth2_um), new Entry(radius2_um), new Entry(inputGap_um*1000), new Entry(outputGap_um*1000), new Entry(ringRingGap_um*1e3)) ;
+		return AddDropRing_translated ;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = objectPort.translateXY(dX, dY) ;
+		AbstractElement AddDropRing_translated = new AddDropRingSecondOrder(newName, layerMap, portNumber, port_translated, new Entry(ringWidth1_um), new Entry(radius1_um), 
 				new Entry(ringWidth2_um), new Entry(radius2_um), new Entry(inputGap_um*1000), new Entry(outputGap_um*1000), new Entry(ringRingGap_um*1e3)) ;
 		return AddDropRing_translated ;
 	}

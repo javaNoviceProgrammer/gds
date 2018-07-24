@@ -89,6 +89,8 @@ public class RingWg extends AbstractElement {
 		objectProperties.put(objectName+".port2.angle_rad", port2.getNormalRad()) ;
 		objectProperties.put(objectName+".port2.normal_degree", port2.getNormalDegree()) ;
 		objectProperties.put(objectName+".port2.normal_rad", port2.getNormalRad()) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	private void setCorners(){
@@ -141,6 +143,13 @@ public class RingWg extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = objectPort.translateXY(dX, dY) ;
 		AbstractElement RingWg_translated = new RingWg(objectName, layerMap, portNumber, port_translated, new Entry(ringWidth_um), new Entry(radius_um), new Entry(inputGap_nm)) ;
+		return RingWg_translated ;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = objectPort.translateXY(dX, dY) ;
+		AbstractElement RingWg_translated = new RingWg(newName, layerMap, portNumber, port_translated, new Entry(ringWidth_um), new Entry(radius_um), new Entry(inputGap_nm)) ;
 		return RingWg_translated ;
 	}
 	

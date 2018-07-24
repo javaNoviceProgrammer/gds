@@ -72,6 +72,7 @@ public class Yjunction extends AbstractElement {
 		objectProperties.put(objectName+".offset.horizontal_um", hOffset_um) ;
 		objectProperties.put(objectName+".offset.vertical_um", vOffset_um) ;
 
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -112,6 +113,13 @@ public class Yjunction extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = objectPort.translateXY(dX, dY) ;
 		AbstractElement y_translated = new Yjunction(objectName, layerMap, portNumber, port_translated, new Entry(hOffset_um), new Entry(vOffset_um) ) ;
+		return y_translated ;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = objectPort.translateXY(dX, dY) ;
+		AbstractElement y_translated = new Yjunction(newName, layerMap, portNumber, port_translated, new Entry(hOffset_um), new Entry(vOffset_um) ) ;
 		return y_translated ;
 	}
 	

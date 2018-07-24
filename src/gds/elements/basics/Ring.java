@@ -82,6 +82,8 @@ public class Ring extends AbstractElement {
 		objectProperties.put(objectName+".width_um", width_um) ;
 		objectProperties.put(objectName+".innerradius_um", Rin) ;
 		objectProperties.put(objectName+".outerradius_um", Rout) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	// generating the necessary python code***************
@@ -150,6 +152,13 @@ public class Ring extends AbstractElement {
 		return ring_translated;
 	}
 	
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Center center_translated = centerPosition.translateXY(dX, dY) ;
+		AbstractElement ring_translated = new Ring(newName, layerMap, center_translated, new Entry(width_um), new Entry(radius_um)) ;
+		return ring_translated;
+	}
+	
 	//************************************ defining and creating the ports ************
 	public static class Center{
 
@@ -175,7 +184,7 @@ public class Ring extends AbstractElement {
 		}
 		
 	}
-	
+
 	//********************************************************
 	
 }

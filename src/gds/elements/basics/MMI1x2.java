@@ -108,6 +108,8 @@ public class MMI1x2 extends AbstractElement {
 		objectProperties.put(objectName+".wgtaper.width_um", width_wg_taper_um) ;
 		objectProperties.put(objectName+".wgtaper.length_um", length_wg_taper_um) ;
 		objectProperties.put(objectName+".output.separation_um", sep_output_um) ;
+		
+		allElements.put(objectName, this) ;
 	}
 
 	private void createObject(){
@@ -172,6 +174,13 @@ public class MMI1x2 extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = objectPort.translateXY(dX, dY) ;
 		AbstractElement mmi_translated = new MMI1x2(objectName, layerMap, portNumber, port_translated, new Entry(width_mmi_um), new Entry(length_mmi_um), new Entry(sep_output_um), new Entry(length_wg_um), new Entry(width_wg_taper_um), new Entry(length_wg_taper_um)) ;
+		return mmi_translated;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = objectPort.translateXY(dX, dY) ;
+		AbstractElement mmi_translated = new MMI1x2(newName, layerMap, portNumber, port_translated, new Entry(width_mmi_um), new Entry(length_mmi_um), new Entry(sep_output_um), new Entry(length_wg_um), new Entry(width_wg_taper_um), new Entry(length_wg_taper_um)) ;
 		return mmi_translated;
 	}
 

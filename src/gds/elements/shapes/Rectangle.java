@@ -136,4 +136,11 @@ public class Rectangle extends AbstractElement {
 		return Rectangle_new ;
 	}
 
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Position P1_translated = P1.translateXY(dX, dY) ;
+		AbstractElement Rectangle_new = new Rectangle(newName, layerMap, P1_translated, width_um, length_um, angleDegree) ;
+		return Rectangle_new ;
+	}
+
 }

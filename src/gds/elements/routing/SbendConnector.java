@@ -99,5 +99,13 @@ public class SbendConnector extends AbstractElement {
 		AbstractElement bendConnector_translated = new SbendConnector(objectName, layerMap, port1_translated, port2_translated) ;
 		return bendConnector_translated ;
 	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port1_translated = port1.translateXY(dX, dY) ;
+		Port port2_translated = port2.translateXY(dX, dY) ;
+		AbstractElement bendConnector_translated = new SbendConnector(newName, layerMap, port1_translated, port2_translated) ;
+		return bendConnector_translated ;
+	}
 	
 }

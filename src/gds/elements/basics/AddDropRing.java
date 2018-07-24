@@ -95,6 +95,8 @@ public class AddDropRing extends AbstractElement {
 		objectProperties.put(objectName+".inputgap_um", inputGap_um) ;
 		objectProperties.put(objectName+".outputgap_nm", outputGap_um*1000) ;
 		objectProperties.put(objectName+".outputgap_um", outputGap_um) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -144,6 +146,13 @@ public class AddDropRing extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = objectPort.translateXY(dX, dY) ;
 		AbstractElement AddDropRing_translated = new AddDropRing(objectName, layerMap, portNumber, port_translated, new Entry(ringWidth_um), new Entry(radius_um), new Entry(inputGap_um*1000), new Entry(outputGap_um*1000)) ;
+		return AddDropRing_translated ;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = objectPort.translateXY(dX, dY) ;
+		AbstractElement AddDropRing_translated = new AddDropRing(newName, layerMap, portNumber, port_translated, new Entry(ringWidth_um), new Entry(radius_um), new Entry(inputGap_um*1000), new Entry(outputGap_um*1000)) ;
 		return AddDropRing_translated ;
 	}
 	

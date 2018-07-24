@@ -116,6 +116,7 @@ public class CurvedWg extends AbstractElement {
 		objectProperties.put(objectName+".port2.normal_degree", port2.getNormalDegree()) ;
 		objectProperties.put(objectName+".port2.normal_rad", port2.getNormalRad()) ;
 		
+		allElements.put(objectName, this) ;
 	}
 	//****************************************************************************
 	private void setVertices(){
@@ -187,6 +188,14 @@ public class CurvedWg extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port1_translated = port1.translateXY(dX, dY) ;
 		AbstractElement Cwg_translated = new CurvedWg(objectName, layerMap, portNumber, port1_translated, toRight, new Entry(radius_um), new Entry(angleDegree)) ;
+		return Cwg_translated;
+	}
+
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port1_translated = port1.translateXY(dX, dY) ;
+		AbstractElement Cwg_translated = new CurvedWg(newName, layerMap, portNumber, port1_translated, toRight, new Entry(radius_um), new Entry(angleDegree)) ;
 		return Cwg_translated;
 	}
 	

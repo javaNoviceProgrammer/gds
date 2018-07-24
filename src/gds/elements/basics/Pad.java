@@ -76,7 +76,7 @@ public class Pad extends AbstractElement {
 	
 	@Override
 	public void saveProperties(){
-		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -118,6 +118,13 @@ public class Pad extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Position P1_translated = P1.translateXY(dX, dY) ;
 		AbstractElement pad_translated = new Pad(objectName, layerMap1, layerMap2, layerMapVIA, new Entry(width_um), new Entry(width_VIA_um), numRows, numColumns, new Entry(dx_um), new Entry(dy_um), P1_translated) ;
+		return pad_translated;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Position P1_translated = P1.translateXY(dX, dY) ;
+		AbstractElement pad_translated = new Pad(newName, layerMap1, layerMap2, layerMapVIA, new Entry(width_um), new Entry(width_VIA_um), numRows, numColumns, new Entry(dx_um), new Entry(dy_um), P1_translated) ;
 		return pad_translated;
 	}
 

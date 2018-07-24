@@ -75,6 +75,8 @@ public class Disk extends AbstractElement {
 		objectProperties.put(objectName+".radius_um", radius_um) ;
 		objectProperties.put(objectName+".center.x", center.getX()) ;
 		objectProperties.put(objectName+".center.y", center.getY()) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -113,6 +115,13 @@ public class Disk extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Center center_translated = centerPosition.translateXY(dX, dY) ;
 		AbstractElement disk_new = new Disk(objectName, layerMap, center_translated, new Entry(radius_um)) ;
+		return disk_new ;
+	}
+	
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Center center_translated = centerPosition.translateXY(dX, dY) ;
+		AbstractElement disk_new = new Disk(newName, layerMap, center_translated, new Entry(radius_um)) ;
 		return disk_new ;
 	}
 	

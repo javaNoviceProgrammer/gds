@@ -113,7 +113,8 @@ public class Bend180degreeCircular extends AbstractElement {
 		objectProperties.put(objectName+".port2.angle_rad", port2.getAngleRad()) ;
 		objectProperties.put(objectName+".port2.normal_degree", port2.getNormalDegree()) ;
 		objectProperties.put(objectName+".port2.normal_rad", port2.getNormalRad()) ;
-
+		
+		allElements.put(objectName, this) ;
 	}
 	//****************************************************************************
 	private void setVertices(){
@@ -185,6 +186,14 @@ public class Bend180degreeCircular extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port1_translated = port1.translateXY(dX, dY) ;
 		AbstractElement Cwg_translated = new Bend180degreeCircular(objectName, layerMap, portNumber, port1_translated, new Entry(radius_um)) ;
+		return Cwg_translated;
+	}
+
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port1_translated = port1.translateXY(dX, dY) ;
+		AbstractElement Cwg_translated = new Bend180degreeCircular(newName, layerMap, portNumber, port1_translated, new Entry(radius_um)) ;
 		return Cwg_translated;
 	}
 

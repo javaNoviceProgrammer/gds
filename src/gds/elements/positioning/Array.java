@@ -107,4 +107,11 @@ public class Array extends AbstractElement {
 		return array_translated;
 	}
 
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		AbstractElement element_translated = element.translateXY(dX, dY) ;
+		AbstractElement array_translated = new Array(newName, element_translated, numRows, numColumns, dx, dy) ;
+		return array_translated;
+	}
+
 }

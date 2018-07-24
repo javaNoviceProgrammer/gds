@@ -49,7 +49,7 @@ public class Text extends AbstractElement {
 	
 	@Override
 	public void saveProperties(){
-		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -105,6 +105,13 @@ public class Text extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Position P_translated = P.translateXY(dX, dY) ;
 		AbstractElement text_translated = new Text(objectName, layerMap, text, P_translated, new Entry(size), isHorizontalBool, new Entry(orientationAngleDegree)) ;
+		return text_translated;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Position P_translated = P.translateXY(dX, dY) ;
+		AbstractElement text_translated = new Text(newName, layerMap, text, P_translated, new Entry(size), isHorizontalBool, new Entry(orientationAngleDegree)) ;
 		return text_translated;
 	}
 

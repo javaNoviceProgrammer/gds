@@ -177,4 +177,12 @@ public class PortConnector extends AbstractElement {
 		return portConnector_translated ;
 	}
 
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port1_translated = port1.translateXY(dX, dY) ;
+		Port port2_translated = port2.translateXY(dX, dY) ;
+		AbstractElement portConnector_translated = new PortConnector(newName, layerMap, port1_translated, port2_translated, tempMap) ;
+		return portConnector_translated ;
+	}
+
 }

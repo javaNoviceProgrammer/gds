@@ -66,6 +66,8 @@ public class RaceTrackRing extends AbstractElement {
 		objectProperties.put(objectName+".width_um", width_um) ;
 		objectProperties.put(objectName+".length_um", length_um) ;
 		objectProperties.put(objectName+".radius_um", radius_um) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -105,6 +107,13 @@ public class RaceTrackRing extends AbstractElement {
 		return raceTrackRing_translated;
 	}
 	
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Center center_translated = center.translateXY(dX, dY) ;
+		AbstractElement raceTrackRing_translated = new RaceTrackRing(newName, layerMap, center_translated, new Entry(width_um), new Entry(length_um), new Entry(radius_um), new Entry(angle_degree)) ;
+		return raceTrackRing_translated;
+	}
+	
 	//************************************ defining and creating the ports ************
 	public static class Center{
 
@@ -130,6 +139,7 @@ public class RaceTrackRing extends AbstractElement {
 		}
 		
 	}
+
 	
 	//********************************************************
 

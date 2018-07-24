@@ -81,7 +81,8 @@ public class StraightWg extends AbstractElement {
 		objectProperties.put(objectName+".width_um", width_um) ;
 		objectProperties.put(objectName+".angle_degree", angleDegree) ;
 		objectProperties.put(objectName+".angle_rad", angleRad) ;
-
+		
+		allElements.put(objectName, this) ;
 	}
 	//****************************************************************************
 	public Position center(){
@@ -149,6 +150,13 @@ public class StraightWg extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = port1.translateXY(dX, dY) ;
 		AbstractElement wg_translated = new StraightWg(objectName, layerMap, portNumber, port_translated, new Entry(length_um)) ;
+		return wg_translated;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = port1.translateXY(dX, dY) ;
+		AbstractElement wg_translated = new StraightWg(newName, layerMap, portNumber, port_translated, new Entry(length_um)) ;
 		return wg_translated;
 	}
 	

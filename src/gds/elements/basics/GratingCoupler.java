@@ -56,6 +56,8 @@ public class GratingCoupler extends AbstractElement {
 
 	@Override
 	public void saveProperties(){
+		allElements.put(objectName, this) ;
+		
 //		objectProperties.put(objectName+".mmi.width_um", width_mmi_um) ;
 //		objectProperties.put(objectName+".mmi.length_um", length_mmi_um) ;
 //		objectProperties.put(objectName+".wg.width_um", width_wg_um) ;
@@ -122,6 +124,13 @@ public class GratingCoupler extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = port1.translateXY(dX, dY) ;
 		AbstractElement grating_translated = new GratingCoupler(objectName, layerMap, port_translated, new Entry(width_gc_um), new Entry(length_gc_um), new Entry(sep_um), new Entry(num_gratings), new Entry(length_taper_um)) ;
+		return grating_translated;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_translated = port1.translateXY(dX, dY) ;
+		AbstractElement grating_translated = new GratingCoupler(newName, layerMap, port_translated, new Entry(width_gc_um), new Entry(length_gc_um), new Entry(sep_um), new Entry(num_gratings), new Entry(length_taper_um)) ;
 		return grating_translated;
 	}
 

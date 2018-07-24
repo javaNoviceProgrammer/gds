@@ -65,6 +65,8 @@ public class Frame extends AbstractElement {
 		objectProperties.put(objectName+".thickness_um", width_um) ;
 		objectProperties.put(objectName+".length_um", lx_um) ;
 		objectProperties.put(objectName+".width_um", ly_um) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	public void createFrame(){
@@ -129,6 +131,13 @@ public class Frame extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Position P1_translated = P1.translateXY(dX, dY) ;
 		AbstractElement frame_translated = new Frame(objectName, layerMap, P1_translated, new Entry(width_um), new Entry(lx_um), new Entry(ly_um)) ;
+		return frame_translated ;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Position P1_translated = P1.translateXY(dX, dY) ;
+		AbstractElement frame_translated = new Frame(newName, layerMap, P1_translated, new Entry(width_um), new Entry(lx_um), new Entry(ly_um)) ;
 		return frame_translated ;
 	}
 

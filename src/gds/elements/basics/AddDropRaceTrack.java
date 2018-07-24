@@ -101,6 +101,8 @@ public class AddDropRaceTrack extends AbstractElement {
 		objectProperties.put(objectName+".inputgap_nm", inputGap_nm) ;
 		objectProperties.put(objectName+".outputgap_um", outputGap_um) ;
 		objectProperties.put(objectName+".outputgap_nm", outputGap_nm) ;
+		
+		allElements.put(objectName, this) ;
 	}
 	
 	@Override
@@ -141,6 +143,13 @@ public class AddDropRaceTrack extends AbstractElement {
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_transted = objectPort.translateXY(dX, dY) ;
 		AbstractElement raceTrack_translated = new AddDropRaceTrack(objectName, layerMap, portNumber, port_transted, new Entry(length_um), new Entry(radius_um), new Entry(inputGap_nm), new Entry(outputGap_nm)) ;
+		return raceTrack_translated ;
+	}
+
+	@Override
+	public AbstractElement translateXY(String newName, double dX, double dY) {
+		Port port_transted = objectPort.translateXY(dX, dY) ;
+		AbstractElement raceTrack_translated = new AddDropRaceTrack(newName, layerMap, portNumber, port_transted, new Entry(length_um), new Entry(radius_um), new Entry(inputGap_nm), new Entry(outputGap_nm)) ;
 		return raceTrack_translated ;
 	}
 
