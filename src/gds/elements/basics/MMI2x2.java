@@ -32,7 +32,8 @@ public class MMI2x2 extends AbstractElement {
 			@ParamName(name="Length of MMI region (um)", default_="32") Entry length_mmi_um,
 			@ParamName(name="Separation of input ports (um)", default_="3.14") Entry sep_input_um,
 			@ParamName(name="Separation of output ports (um)", default_="3.14") Entry sep_output_um,
-			@ParamName(name="Width of the tapered input/output (um)", default_="2") Entry width_wg_taper_um
+			@ParamName(name="Width of the tapered input/output (um)", default_="2") Entry width_wg_taper_um,
+			@ParamName(name="Length of the tapered input/output (um)", default_="10") Entry length_wg_taper_um
 			){
 		this.objectName = objectName ;
 		this.layerMap = layerMap ;
@@ -45,8 +46,8 @@ public class MMI2x2 extends AbstractElement {
 		this.width_wg_um = objectPort.getWidthMicron() ;
 		this.length_wg_um = 5 ;
 		this.width_wg_taper_um = width_wg_taper_um.getValue() ;
-		this.length_wg_taper_um = 10 ;
-		lx_um = 2*length_wg_um + 2*length_wg_taper_um + length_mmi_um.getValue() ;
+		this.length_wg_taper_um = length_wg_taper_um.getValue() ;
+		lx_um = 2*length_wg_um + 2*length_wg_taper_um.getValue() + length_mmi_um.getValue() ;
 		ly_in_um = sep_input_um.getValue() ;
 		ly_out_um = sep_output_um.getValue() ;
 
@@ -178,14 +179,14 @@ public class MMI2x2 extends AbstractElement {
 	@Override
 	public AbstractElement translateXY(double dX, double dY) {
 		Port port_translated = objectPort.translateXY(dX, dY) ;
-		AbstractElement mmi_translated = new MMI2x2(objectName, layerMap, portNumber, port_translated, new Entry(width_mmi_um), new Entry(length_mmi_um), new Entry(sep_input_um), new Entry(sep_output_um), new Entry(width_wg_taper_um)) ;
+		AbstractElement mmi_translated = new MMI2x2(objectName, layerMap, portNumber, port_translated, new Entry(width_mmi_um), new Entry(length_mmi_um), new Entry(sep_input_um), new Entry(sep_output_um), new Entry(width_wg_taper_um), new Entry(length_wg_taper_um)) ;
 		return mmi_translated;
 	}
 
 	@Override
 	public AbstractElement translateXY(String newName, double dX, double dY) {
 		Port port_translated = objectPort.translateXY(dX, dY) ;
-		AbstractElement mmi_translated = new MMI2x2(newName, layerMap, portNumber, port_translated, new Entry(width_mmi_um), new Entry(length_mmi_um), new Entry(sep_input_um), new Entry(sep_output_um), new Entry(width_wg_taper_um)) ;
+		AbstractElement mmi_translated = new MMI2x2(newName, layerMap, portNumber, port_translated, new Entry(width_mmi_um), new Entry(length_mmi_um), new Entry(sep_input_um), new Entry(sep_output_um), new Entry(width_wg_taper_um), new Entry(length_wg_taper_um)) ;
 		return mmi_translated;
 	}
 
