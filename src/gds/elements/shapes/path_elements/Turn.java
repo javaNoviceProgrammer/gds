@@ -72,7 +72,7 @@ public class Turn extends AbstractPathElement {
 		String[] args = {st0} ;
 		int layerNumber = layerMap.getLayerNumber() ;
 		int dataType = layerMap.getDataType() ;
-		String st1 = pathName + ".turn(" + radius_um + "," + angleRad + "," + "number_of_points=2000" + "," +  "max_points=5000" + "," +
+		String st1 = pathName + ".turn(" + radius_um + "," + angleRad + "," + "number_of_points=3000" + "," +  "max_points=5000" + "," +
 											"final_width=" + finalWidth_um + "," + "final_distance=None" + "," +  "layer=" + layerNumber + "," + "datatype=" + dataType + ")" ;
 		args = MoreMath.Arrays.concat(args, new String[] {st1}) ;
 		return args;
@@ -83,7 +83,7 @@ public class Turn extends AbstractPathElement {
 		String[] args = {} ;
 		int layerNumber = layerMap.getLayerNumber() ;
 		int dataType = layerMap.getDataType() ;
-		String st1 = pathName + ".turn(" + radius_um + "," + angleRad + "," + "number_of_points=2000" + "," +  "max_points=5000" + "," +
+		String st1 = pathName + ".turn(" + radius_um + "," + angleRad + "," + "number_of_points=3000" + "," +  "max_points=5000" + "," +
 											"final_width=" + finalWidth_um + "," + "final_distance=None" + "," +  "layer=" + layerNumber + "," + "datatype=" + dataType + ")" ;
 		args = MoreMath.Arrays.concat(args, new String[] {st1}) ;
 		return args;

@@ -18,7 +18,7 @@ public class Parametric extends AbstractPathElement {
 	String Xt, Yt ;
 	String Xt_matlab, Yt_matlab ;
 	Expression xt, yt ; // these are the for evaluating matlab strings
-	int numEvals = 1000 ;
+	int numEvals = 3000 ;
 	String functionName = "curvature_function" ;
 	String finalWidth_um ;
 	
@@ -103,7 +103,7 @@ public class Parametric extends AbstractPathElement {
 		// adding the function of curvature
 		args = MoreMath.Arrays.concat(args, getFunction()) ;
 		// now adding the parametric curve
-		String st1 = pathName + ".parametric(" + functionName + "," + "curve_derivative=None" + "," + "number_of_evaluations=" + numEvals + "," + "max_points=1000" + "," + "final_width=" + 
+		String st1 = pathName + ".parametric(" + functionName + "," + "curve_derivative=None" + "," + "number_of_evaluations=" + numEvals + "," + "max_points=5000" + "," + "final_width=" + 
 					 						finalWidth_um + "," + "final_distance=None"+ ", " + "layer=" + layerNumber + "," + "datatype=" + dataType + ")" ;
 		args = MoreMath.Arrays.concat(args, new String[] {st1}) ;
 		return args;
@@ -117,7 +117,7 @@ public class Parametric extends AbstractPathElement {
 		// adding the function of curvature
 		args = MoreMath.Arrays.concat(args, getFunction()) ;
 		// now adding the parametric curve
-		String st1 = pathName + ".parametric(" + functionName + "," + "curve_derivative=None" + "," + "number_of_evaluations=" + numEvals + "," + "max_points=1000" + "," + "final_width=" + 
+		String st1 = pathName + ".parametric(" + functionName + "," + "curve_derivative=None" + "," + "number_of_evaluations=" + numEvals + "," + "max_points=5000" + "," + "final_width=" + 
 					 						finalWidth_um + "," + "final_distance=None"+ ", " + "layer=" + layerNumber + "," + "datatype=" + dataType + ")" ;
 		args = MoreMath.Arrays.concat(args, new String[] {st1}) ;
 		return args;
