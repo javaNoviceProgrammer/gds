@@ -38,6 +38,20 @@ public class Cell {
 		// now clear the data base
 		DataBase.clear();
 	}
+	
+	public Cell(
+			@ParamName(name="Cell Name") String cellName,
+			@ParamName(name="Elements") AbstractElement[] elements
+			){
+		this.cellName = cellName ;
+		this.elements = elements ;
+		this.runLayoutViewer = false ;
+		// create python file and compile it
+		cellPath = CustomJFileChooser.path + File.separator + cellName ;
+		savePyFile() ;
+		// now clear the data base
+		DataBase.clear();
+	}
 
 	public Cell(
 			@ParamName(name="Cell Name") String cellName,
